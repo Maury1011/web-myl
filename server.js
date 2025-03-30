@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 // Ruta para obtener todas las cartas y renderizar la vista
-app.get('/cartas', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const { edicion, tipo, raza, coste, rareza } = req.query;
 
