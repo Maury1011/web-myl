@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas MyL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="filters.css"> <!-- Estilos para los filtros -->
+</head>
+<body>
+    <h1>MyL Cartas</h1>
+
+    <!-- Filtros -->
+    <div id="filters">
+        <form method="get" action="/cartas">
+            <select name="edicion" id="edicion">
+                <option value="">Seleccionar Edición</option>
+                <% ediciones.forEach(edicion => { %>
+                    <option value="<%= edicion.id %>" <%= edicion.id == selectedEdicion ? 'selected' : '' %>><%= edicion.nombre %></option>
+                <% }); %>
+            </select>
+            
+            <select name="tipo" id="tipo">
+                <option value="">Seleccionar Tipo</option>
+                <% tipos.forEach(tipo => { %>
+                    <option value="<%= tipo.id %>" <%= tipo.id == selectedTipo ? 'selected' : '' %>><%= tipo.nombre %></option>
+                <% }); %>
+            </select>
+
+            <select name="raza" id="raza">
+                <option value="">Seleccionar Raza</option>
+                <% razas.forEach(raza => { %>
+                    <option value="<%= raza.id %>" <%= raza.id == selectedRaza ? 'selected' : '' %>><%= raza.nombre %></option>
+                <% }); %>
+            </select>
+
+            <select name="rareza" id="rareza">
+                <option value="">Seleccionar Rareza</option>
+                <% rarezas.forEach(rareza => { %>
+                    <option value="<%= rareza.id %>" <%= rareza.id == selectedRareza ? 'selected' : '' %>><%= rareza.nombre %></option>
+                <% }); %>
+            </select>
+
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
+    <div class="cartas-container">
+        <div class="cartas-list">
+            <% cartas.forEach(carta => { %> 
+                <div class="carta">
+                    <div class="carta-imagen">
+                        <img class="imagen-peque" 
+                            src="/imagenes/<%= carta.Edicion ? carta.Edicion.nombre.replace(/ /g, "_") : 'default_edicion' %>/<%= carta.nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '') %>.webp" 
+                            abc="<%= carta.imagen %>" 
+                            alt="<%= carta.nombre %>">
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    
+    <!-- Modal para la imagen en grande -->
+    <div id="modal" class="modal">
+        <img class="imagen-grande" id="imagenGrande" src="" alt="Imagen en grande">
+    </div>
+    
+    <script>
+        var modal = document.getElementById("modal");
+        var imagenGrande = document.getElementById("imagenGrande");
+    
+        var imagenes = document.querySelectorAll('.imagen-peque');
+        imagenes.forEach(function(imagen) {
+            imagen.onclick = function() {
+                var imagenSrc = imagen.getAttribute('abc');
+                imagenGrande.src = imagenSrc;
+                modal.style.display = "block";
+            }
+        });
+    
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
