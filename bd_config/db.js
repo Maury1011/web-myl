@@ -1,16 +1,20 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import { dbConfig } from './db.config.js';
-import CartaModel from '../models/cartas.model.js';  // Importa el modelo Carta
-// Asegúrate de importar todos los modelos necesarios
-import RazaModel from '../models/raza.model.js';  // Ajusta la ruta según corresponda
-import TipoModel from '../models/tipo.model.js';  // Ajusta la ruta según corresponda
-import RarezaModel from '../models/rareza.model.js';  // Ajusta la ruta según corresponda
-import EdicionModel from '../models/edicion.model.js';  // Ajusta la ruta según corresponda
+import CartaModel from '../models/cartas.model.js';
+import RazaModel from '../models/raza.model.js';
+import TipoModel from '../models/tipo.model.js';
+import RarezaModel from '../models/rareza.model.js';
+import EdicionModel from '../models/edicion.model.js';
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.DIALECT,
-    logging: false // Desactiva el registro de SQL en consola si no lo necesitas
+const sequelize = new Sequelize(dbConfig.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false  // Necesario en Railway
+        }
+    },
+    logging: false
 });
 
 const db = {};
@@ -22,7 +26,7 @@ db.Tipo = TipoModel(sequelize, DataTypes);
 db.Rareza = RarezaModel(sequelize, DataTypes);
 db.Edicion = EdicionModel(sequelize, DataTypes);
 
-// Definir las relaciones (asociaciones)
+// Definir las relaciones
 db.Carta.belongsTo(db.Raza, { foreignKey: 'raza_id' });
 db.Carta.belongsTo(db.Tipo, { foreignKey: 'tipo_id' });
 db.Carta.belongsTo(db.Rareza, { foreignKey: 'rareza_id' });
@@ -31,13 +35,13 @@ db.Carta.belongsTo(db.Edicion, { foreignKey: 'edicion_id' });
 async function connectAndSyncDB() {
     try {
         await sequelize.authenticate();
-        console.log('Conexión a la base de datos establecida exitosamente');
-        
-        // Sincronizar la base de datos
-        await sequelize.sync({ force: false });  // Evita eliminar datos si no es necesario
-        console.log('Tablas sincronizadas y datos predeterminados agregados con éxito');
+        console.log('✅ Conexión a la base de datos establecida exitosamente');
+
+        // Sincronizar la base de datos sin perder datos existentes
+        await sequelize.sync({ alter: true });
+        console.log('✅ Tablas sincronizadas correctamente');
     } catch (error) {
-        console.error('Error al conectar o sincronizar la base de datos:', error);
+        console.error('❌ Error al conectar o sincronizar la base de datos:', error);
     }
 }
 
