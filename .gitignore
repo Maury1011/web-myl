@@ -1,5 +1,4 @@
 node_modules/
 package-lock.json
-bd_config/
-db_config.js
-db.js
+bd_config/db.config.js
+bd_config/db.js
