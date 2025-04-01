@@ -48,14 +48,10 @@
     <div class="cartas-container">
         <div class="cartas-list">
             <% cartas.forEach(carta => { %> 
-                <div class="carta">
-                    <div class="carta-imagen">
-                        <img class="imagen-peque" 
-                            src="/imagenes/<%= carta.Edicion ? carta.Edicion.nombre.replace(/ /g, "_") : 'default_edicion' %>/<%= carta.nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '') %>.webp" 
-                            abc="<%= carta.imagen %>" 
-                            alt="<%= carta.nombre %>">
-                    </div>
-                </div>
+                <img class="imagen-peque" 
+                    src="/imagenes/<%= carta.Edicion ? carta.Edicion.nombre.replace(/ /g, "_") : 'default_edicion' %>/<%= carta.nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '') %>.webp" 
+                    abc="<%= carta.imagen %>" 
+                    alt="<%= carta.nombre %>">
             <% }); %>
         </div>
     </div>

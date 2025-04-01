@@ -22,6 +22,12 @@ h1 {
     color: #fff;
 }
 
+.imagen-peque{
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    width: 200px;
+}
+
 .cartas-container {
     max-height: calc(100vh - 200px); /* Limita la altura a la ventana visible */
     overflow-y: auto; /* Permite desplazarse si el contenido excede la altura */
@@ -34,18 +40,6 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-}
-
-.carta {
-    max-width: 420px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border: solid 1px black;
 }
 
 .carta-info {
@@ -96,7 +90,7 @@ h1 {
 
 /* Imagen en el modal */
 .imagen-grande {
-    max-width: 500px;
+    max-width: 90vw;
     max-height: 90vh;
     margin: auto;
     display: block;
