@@ -27,9 +27,18 @@ app.get('/', async (req, res) => {
         if (edicion) whereClause['edicion_id'] = edicion;
         if (tipo) whereClause['tipo_id'] = tipo;
         if (raza) whereClause['raza_id'] = raza;
-        if (subRaza) whereClause['sub_raza_id'] = subRaza;
         if (rareza) whereClause['rareza_id'] = rareza;
-        
+
+        // Configurar filtros para subRaza (si se selecciona una)
+        const includeSubRaza = {
+            model: db.SubRaza,
+            attributes: ['id', 'nombre'],
+            through: { attributes: [] }
+        };
+
+        if (subRaza) {
+            includeSubRaza.where = { id: subRaza }; // Filtrar cartas que tengan esta subRaza
+        }
 
         // Consulta con los filtros aplicados
         const cartas = await db.Carta.findAll({
@@ -38,12 +47,14 @@ app.get('/', async (req, res) => {
                 { model: db.Edicion, attributes: ['id', 'nombre'] },
                 { model: db.Tipo, attributes: ['id', 'nombre'] },
                 { model: db.Raza, attributes: ['id', 'nombre'] },
-                { model: db.SubRaza, attributes: ['id', 'nombre'] },
-                { model: db.Rareza, attributes: ['id', 'nombre'] },            ],
-            limit: 100
+                includeSubRaza, // Se filtra solo si `subRaza` fue pasado como query param
+                { model: db.Rareza, attributes: ['id', 'nombre'] }
+            ],
+            order: [['id', 'ASC']], // Ordenar por ID ascendente
+            limit: 400
         });
 
-        // Obtener todas las ediciones, tipos, razas y rarezas para los filtros
+        // Obtener todas las ediciones, tipos, razas, sub razas y rarezas para los filtros
         const ediciones = await db.Edicion.findAll();
         const tipos = await db.Tipo.findAll();
         const razas = await db.Raza.findAll();
@@ -61,7 +72,7 @@ app.get('/', async (req, res) => {
             selectedEdicion: edicion || '',
             selectedTipo: tipo || '',
             selectedRaza: raza || '',
-            selectedSubRaza: subRaza || '',
+            selectedSubRaza: subRaza ? [subRaza] : [],
             selectedRareza: rareza || ''
         });
     } catch (error) {
@@ -69,6 +80,7 @@ app.get('/', async (req, res) => {
         res.status(500).send('Error al obtener las cartas');
     }
 });
+
 
 // Función para iniciar el servidor después de la conexión a la base de datos
 app.listen(port, () => {

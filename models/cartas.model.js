@@ -1,3 +1,5 @@
+
+
 export default (sequelize, DataTypes) => {
     const Carta = sequelize.define(
         'Carta', {
@@ -54,6 +56,7 @@ export default (sequelize, DataTypes) => {
         tableName: 'cartas',
         timestamps: true,
     })
+
     return Carta
 }
 

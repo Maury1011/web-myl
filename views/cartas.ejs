@@ -37,9 +37,12 @@
             <select name="subRaza" id="subRaza">
                 <option value="">Sub Raza</option>
                 <% subRazas.forEach(sub_raza => { %>
-                    <option value="<%= sub_raza.id %>" <%= sub_raza.id == selectedSubRaza ? 'selected' : '' %>><%= sub_raza.nombre %></option>
+                    <option value="<%= sub_raza.id %>" <%= selectedSubRaza && selectedSubRaza.includes(sub_raza.id.toString()) ? 'selected' : '' %>>
+                        <%= sub_raza.nombre %>
+                    </option>
                 <% }); %>
             </select>
+            
 
             <select name="rareza" id="rareza">
                 <option value="">Rareza</option>

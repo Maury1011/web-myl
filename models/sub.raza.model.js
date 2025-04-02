@@ -1,3 +1,4 @@
+
 export default (sequelize, DataTypes) => {
     const SubRaza = sequelize.define(
         'SubRaza', {
@@ -16,13 +17,6 @@ export default (sequelize, DataTypes) => {
         tableName: 'sub_raza',
         timestamps: false,
     })
-
-    SubRaza.associate = (models) => {
-        Raza.hasMany(models.Carta, {
-            foreignKey: 'sub_raza_id',
-            as: 'cartas'
-        });
-    };
 
     return SubRaza
 }

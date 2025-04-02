@@ -8,7 +8,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto; /* Permite desplazamiento vertical si el contenido excede la altura de la ventana */
     box-sizing: border-box;
     display: inline;
 }
@@ -17,7 +18,7 @@ h1 {
     width: 100%;
     background-color: #AF1740;
     margin: 0;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     color: #fff;
 }
@@ -25,13 +26,11 @@ h1 {
 .imagen-peque{
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    width: 200px;
+    width: 150px;
 }
 
 .cartas-container {
-    max-height: calc(100vh - 200px); /* Limita la altura a la ventana visible */
-    overflow-y: auto; /* Permite desplazarse si el contenido excede la altura */
-    padding: 20px;
+    padding: 20px 0px;
 }
 
 .cartas-list {
@@ -39,7 +38,7 @@ h1 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .carta-info {
