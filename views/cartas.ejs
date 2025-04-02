@@ -14,28 +14,35 @@
     <div id="filters">
         <form method="get" action="/">
             <select name="edicion" id="edicion">
-                <option value="">Seleccionar Edición</option>
+                <option value="">Edición</option>
                 <% ediciones.forEach(edicion => { %>
                     <option value="<%= edicion.id %>" <%= edicion.id == selectedEdicion ? 'selected' : '' %>><%= edicion.nombre %></option>
                 <% }); %>
             </select>
             
             <select name="tipo" id="tipo">
-                <option value="">Seleccionar Tipo</option>
+                <option value="">Tipo</option>
                 <% tipos.forEach(tipo => { %>
                     <option value="<%= tipo.id %>" <%= tipo.id == selectedTipo ? 'selected' : '' %>><%= tipo.nombre %></option>
                 <% }); %>
             </select>
 
             <select name="raza" id="raza">
-                <option value="">Seleccionar Raza</option>
+                <option value="">Raza</option>
                 <% razas.forEach(raza => { %>
                     <option value="<%= raza.id %>" <%= raza.id == selectedRaza ? 'selected' : '' %>><%= raza.nombre %></option>
                 <% }); %>
             </select>
 
+            <select name="subRaza" id="subRaza">
+                <option value="">Sub Raza</option>
+                <% subRazas.forEach(sub_raza => { %>
+                    <option value="<%= sub_raza.id %>" <%= sub_raza.id == selectedSubRaza ? 'selected' : '' %>><%= sub_raza.nombre %></option>
+                <% }); %>
+            </select>
+
             <select name="rareza" id="rareza">
-                <option value="">Seleccionar Rareza</option>
+                <option value="">Rareza</option>
                 <% rarezas.forEach(rareza => { %>
                     <option value="<%= rareza.id %>" <%= rareza.id == selectedRareza ? 'selected' : '' %>><%= rareza.nombre %></option>
                 <% }); %>

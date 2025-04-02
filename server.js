@@ -20,13 +20,14 @@ app.set('views', './views');
 // Ruta para obtener todas las cartas y renderizar la vista
 app.get('/', async (req, res) => {
     try {
-        const { edicion, tipo, raza, coste, rareza } = req.query;
+        const { edicion, tipo, raza, subRaza, rareza } = req.query;
 
         const whereClause = {};
 
         if (edicion) whereClause['edicion_id'] = edicion;
         if (tipo) whereClause['tipo_id'] = tipo;
         if (raza) whereClause['raza_id'] = raza;
+        if (subRaza) whereClause['sub_raza_id'] = subRaza;
         if (rareza) whereClause['rareza_id'] = rareza;
         
 
@@ -37,8 +38,8 @@ app.get('/', async (req, res) => {
                 { model: db.Edicion, attributes: ['id', 'nombre'] },
                 { model: db.Tipo, attributes: ['id', 'nombre'] },
                 { model: db.Raza, attributes: ['id', 'nombre'] },
-                { model: db.Rareza, attributes: ['id', 'nombre'] },
-            ],
+                { model: db.SubRaza, attributes: ['id', 'nombre'] },
+                { model: db.Rareza, attributes: ['id', 'nombre'] },            ],
             limit: 100
         });
 
@@ -46,6 +47,7 @@ app.get('/', async (req, res) => {
         const ediciones = await db.Edicion.findAll();
         const tipos = await db.Tipo.findAll();
         const razas = await db.Raza.findAll();
+        const subRazas = await db.SubRaza.findAll();
         const rarezas = await db.Rareza.findAll();
 
         // Pasar los datos a la vista
@@ -53,11 +55,13 @@ app.get('/', async (req, res) => {
             cartas, 
             ediciones, 
             tipos, 
-            razas, 
+            razas,
+            subRazas, 
             rarezas,
             selectedEdicion: edicion || '',
             selectedTipo: tipo || '',
             selectedRaza: raza || '',
+            selectedSubRaza: subRaza || '',
             selectedRareza: rareza || ''
         });
     } catch (error) {
