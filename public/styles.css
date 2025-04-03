@@ -14,9 +14,16 @@ body {
     display: inline;
 }
 
+.header {
+    background-color: #AF1740;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
 h1 {
     width: 100%;
-    background-color: #AF1740;
     margin: 0;
     padding: 10px;
     text-align: center;
